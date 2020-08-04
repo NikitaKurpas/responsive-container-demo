@@ -1,6 +1,10 @@
 import { css, Interpolation, ObjectInterpolation } from "emotion";
-import { Breakpoint, BREAKPOINTS } from "./ResponsiveContainer";
-import { keys } from "./utils";
+import { transform } from "src/lib/utils";
+import {
+  breakpointSelector,
+  isBreakpoint,
+  Breakpoint,
+} from "src/lib/breakpoint";
 
 export interface ResponsiveArrayInterpolation<MP>
   extends Array<ResponsiveObjectInterpolation<MP>> {}
@@ -13,38 +17,36 @@ export type ResponsiveInterpolation<MP = undefined> =
   | ResponsiveArrayInterpolation<MP>;
 
 /**
- * Experimental function to augment standard emtion `css` function with the
- * ability to specify responsive container breakpoints.
+ * Experimental function to augment standard emotion `css` function with the ability to specify responsive container
+ * breakpoints.
  * Usage:
  * ```
- * const className = useResponsiveContainerStyles({
- *    // ... standard styles that do not change, standard emotion `css` syntax
+ * const className = responsiveCss({
+ *    // ... styles that do not change, standard emotion `css` syntax
+ *    color: 'red',
  *    [Breakpoint.MD]: {
  *        // ... styles that are specific for the MD breakpoint, again standard emotion `css` syntax
+ *        background: 'black',
  *    }
  *    [Breakpoint.LG]: {
  *        // ... styles that are specific for the LG breakpoint, again standard emotion `css` syntax
+ *        background: 'blue',
  *    }
  * })
  * ```
  */
-export const useResponsiveContainerStyles = (
-  styles: ResponsiveInterpolation
-): string => {
+export const responsiveCss = (styles: ResponsiveInterpolation): string => {
   const processObjectStyles = (
     objectStyles: ResponsiveObjectInterpolation<any>
   ) =>
-    keys(objectStyles).reduce(
-      (result, rule) => {
-        if (BREAKPOINTS.find(breakpoint => breakpoint === rule)) {
-          const breakpoint = rule as Breakpoint;
-          result[`${breakpoint} &`] = objectStyles[breakpoint];
-          return result;
+    transform(
+      objectStyles,
+      (result, rule, style) => {
+        if (isBreakpoint(rule)) {
+          result[breakpointSelector(rule)] = style;
         } else {
-          result[rule] = objectStyles[rule];
+          result[rule] = style;
         }
-
-        return result;
       },
       {} as ObjectInterpolation<any>
     );

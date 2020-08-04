@@ -1,54 +1,40 @@
-import * as React from "react";
+import React, { FC } from "react";
 import { css, cx } from "emotion";
-import ResponsiveContainer, {
-  Breakpoint,
-  breakpoint,
-  containerBreakpoint,
-  display
-} from "./ResponsiveContainer";
-import { spacing } from "./spacing";
+import ResponsiveContainer from "src/components/ResponsiveContainer";
+import { spacing } from "src/lib/spacing";
+import { display, breakpointSelector, Breakpoint } from "src/lib/breakpoint";
+import ContainerRemRoot from "src/components/ContainerRemRoot";
+import { responsiveCss } from "src/lib/responsiveStyles";
 
-export default function App() {
-  return (
+const App: FC = () => (
+  <div
+    className={css({
+      // Default value for custom container rem (cem) unit should be 1rem
+      "--cem": "1rem",
+    })}
+  >
+    <h1>Container query demo</h1>
+    <h3>Look ma, no re-renders!</h3>
+
     <div
       className={css({
-        // Defaul value for custom container rem (cem) unit should be 1rem
-        "--cem": "1rem"
+        padding: "8px",
+        border: "1px solid black",
+        marginBottom: "12px",
       })}
     >
-      <h1>Container query demo</h1>
+      Normal container
+    </div>
 
-      <div
-        className={css({
-          padding: "8px",
-          border: "1px solid black",
-          marginBottom: "12px"
-        })}
-      >
-        Normal container
-      </div>
-
-      <ResponsiveContainer
-        className={css({
-          padding: "8px",
-          border: "1px solid red",
-          marginBottom: "12px",
-          "--cem": "0.5rem",
-          [containerBreakpoint(Breakpoint.SM)]: {
-            "--cem": "1rem"
-          },
-          [containerBreakpoint(Breakpoint.MD)]: {
-            "--cem": "1.5rem"
-          },
-          [containerBreakpoint(Breakpoint.LG)]: {
-            "--cem": "2rem"
-          },
-          [containerBreakpoint(Breakpoint.XL)]: {
-            "--cem": "2.5rem"
-          }
-        })}
-      >
-        <p>Resizable container 1</p>
+    <ResponsiveContainer
+      className={css({
+        padding: "8px",
+        border: "1px solid red",
+        marginBottom: "12px",
+      })}
+    >
+      <ContainerRemRoot>
+        <p>Responsive container 1</p>
         <p>
           Current sizes:
           <br />
@@ -118,21 +104,46 @@ export default function App() {
             className={css({
               display: "block",
               color: "orange",
-              [breakpoint(Breakpoint.SM)]: {
-                color: "red"
+              [breakpointSelector(Breakpoint.SM)]: {
+                color: "red",
               },
-              [breakpoint(Breakpoint.MD)]: {
-                color: "blue"
+              [breakpointSelector(Breakpoint.MD)]: {
+                color: "blue",
               },
-              [breakpoint(Breakpoint.LG)]: {
-                color: "green"
+              [breakpointSelector(Breakpoint.LG)]: {
+                color: "green",
               },
-              [breakpoint(Breakpoint.XL)]: {
-                color: "purple"
-              }
+              [breakpointSelector(Breakpoint.XL)]: {
+                color: "purple",
+              },
             })}
           >
             Responsive colored text
+          </span>
+        </p>
+
+        <p>
+          This text uses the augmented <code>css</code> function to specify
+          styles:
+          <span
+            className={responsiveCss({
+              display: "block",
+              fontSize: "12px",
+              [Breakpoint.SM]: {
+                fontSize: "12px",
+              },
+              [Breakpoint.MD]: {
+                fontSize: "16px",
+              },
+              [Breakpoint.LG]: {
+                fontSize: "20px",
+              },
+              [Breakpoint.XL]: {
+                fontSize: "24px",
+              },
+            })}
+          >
+            Responsive size text
           </span>
         </p>
 
@@ -158,57 +169,58 @@ export default function App() {
         </div>
 
         <h5 style={{ fontSize: spacing(1) }}>cem font size demo</h5>
-      </ResponsiveContainer>
+      </ContainerRemRoot>
+    </ResponsiveContainer>
 
-      <p>This demo showcases responsive containers inside a flex container:</p>
-      <div
+    <p>This demo showcases responsive containers inside a flex container:</p>
+    <div
+      className={css({
+        display: "flex",
+        "& > * + *": { marginLeft: "12px" },
+        marginBottom: "12px",
+        padding: "8px",
+        border: "1px solid purple",
+      })}
+    >
+      <ResponsiveContainer
         className={css({
-          display: "flex",
-          "& > * + *": { marginLeft: "12px" },
-          marginBottom: "12px",
           padding: "8px",
-          border: "1px solid purple"
+          border: "1px solid blue",
         })}
       >
-        <ResponsiveContainer
-          className={css({
-            padding: "8px",
-            border: "1px solid blue"
-          })}
-        >
-          Resizable container 2
-          <ContainerQuery breakpoint={Breakpoint.XS}>XS</ContainerQuery>
-          <ContainerQuery breakpoint={Breakpoint.SM}>SM</ContainerQuery>
-          <ContainerQuery breakpoint={Breakpoint.MD}>MD</ContainerQuery>
-          <ContainerQuery breakpoint={Breakpoint.LG}>LG</ContainerQuery>
-          <ContainerQuery breakpoint={Breakpoint.XL}>XL</ContainerQuery>
-        </ResponsiveContainer>
-        <ResponsiveContainer
-          className={css({
-            flex: "1",
-            padding: "8px",
-            border: "1px solid blue"
-          })}
-        >
-          Resizable container 3
-          <ContainerQuery breakpoint={Breakpoint.XS}>XS</ContainerQuery>
-          <ContainerQuery breakpoint={Breakpoint.SM}>SM</ContainerQuery>
-          <ContainerQuery breakpoint={Breakpoint.MD}>MD</ContainerQuery>
-          <ContainerQuery breakpoint={Breakpoint.LG}>LG</ContainerQuery>
-          <ContainerQuery breakpoint={Breakpoint.XL}>XL</ContainerQuery>
-        </ResponsiveContainer>
-      </div>
+        Responsive container 2
+        <ContainerQuery breakpoint={Breakpoint.XS}>XS</ContainerQuery>
+        <ContainerQuery breakpoint={Breakpoint.SM}>SM</ContainerQuery>
+        <ContainerQuery breakpoint={Breakpoint.MD}>MD</ContainerQuery>
+        <ContainerQuery breakpoint={Breakpoint.LG}>LG</ContainerQuery>
+        <ContainerQuery breakpoint={Breakpoint.XL}>XL</ContainerQuery>
+      </ResponsiveContainer>
+      <ResponsiveContainer
+        className={css({
+          flex: "1",
+          padding: "8px",
+          border: "1px solid blue",
+        })}
+      >
+        Responsive container 3
+        <ContainerQuery breakpoint={Breakpoint.XS}>XS</ContainerQuery>
+        <ContainerQuery breakpoint={Breakpoint.SM}>SM</ContainerQuery>
+        <ContainerQuery breakpoint={Breakpoint.MD}>MD</ContainerQuery>
+        <ContainerQuery breakpoint={Breakpoint.LG}>LG</ContainerQuery>
+        <ContainerQuery breakpoint={Breakpoint.XL}>XL</ContainerQuery>
+      </ResponsiveContainer>
     </div>
-  );
-}
+  </div>
+);
+
+export default App;
 
 /**
- * Uses an additional div element to asbtract some logic around showing and hiding
- * content under specified breakpoint
+ * Uses an additional div element to abstract some logic around showing and hiding content under specified breakpoint
  */
-const ContainerQuery: React.FC<{ breakpoint: Breakpoint }> = ({
+const ContainerQuery: FC<{ breakpoint: Breakpoint }> = ({
   breakpoint: b,
-  children
+  children,
 }) => (
   <div className={cx(display("none"), display(b, "block"))}>{children}</div>
 );
