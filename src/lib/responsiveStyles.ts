@@ -1,10 +1,6 @@
 import { css, Interpolation, ObjectInterpolation } from "emotion";
-import { transform } from "src/lib/utils";
-import {
-  breakpointSelector,
-  isBreakpoint,
-  Breakpoint,
-} from "src/lib/breakpoint";
+import { transform } from "./utils";
+import { breakpointSelector, isBreakpoint, Breakpoint } from "./breakpoint";
 
 export interface ResponsiveArrayInterpolation<MP>
   extends Array<ResponsiveObjectInterpolation<MP>> {}

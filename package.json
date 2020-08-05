@@ -10,7 +10,7 @@
   ],
   "main": "src/index.tsx",
   "dependencies": {
-    "emotion": "^10.0.27",
+    "emotion": "^10.0.27l",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },

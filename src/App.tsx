@@ -1,10 +1,10 @@
 import React, { FC } from "react";
 import { css, cx } from "emotion";
-import ResponsiveContainer from "src/components/ResponsiveContainer";
-import { spacing } from "src/lib/spacing";
-import { display, breakpointSelector, Breakpoint } from "src/lib/breakpoint";
-import ContainerRemRoot from "src/components/ContainerRemRoot";
-import { responsiveCss } from "src/lib/responsiveStyles";
+import ResponsiveContainer from "./components/ResponsiveContainer";
+import { spacing } from "./lib/spacing";
+import { display, breakpointSelector, Breakpoint } from "./lib/breakpoint";
+import ContainerRemRoot from "./components/ContainerRemRoot";
+import { responsiveCss } from "./lib/responsiveStyles";
 
 const App: FC = () => (
   <div

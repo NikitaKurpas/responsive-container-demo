@@ -1,6 +1,6 @@
 import React, { FC, HTMLProps } from "react";
 import { cx, css } from "emotion";
-import { breakpointSelector, Breakpoint } from "src/lib/breakpoint";
+import { breakpointSelector, Breakpoint } from "../lib/breakpoint";
 
 export const CEM_VAR_NAME = "cem";
 

@@ -1,4 +1,4 @@
-import { CEM_VAR_NAME } from "src/components/ContainerRemRoot";
+import { CEM_VAR_NAME } from "../components/ContainerRemRoot";
 
 export type SpacingValue = number | "auto";
 /**

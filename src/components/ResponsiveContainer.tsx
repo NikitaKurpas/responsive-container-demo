@@ -5,8 +5,8 @@ import React, {
   HTMLAttributes,
   FC,
 } from "react";
-import { keys } from "src/lib/utils";
-import { Breakpoint } from "src/lib/breakpoint";
+import { keys } from "../lib/utils";
+import { Breakpoint } from "../lib/breakpoint";
 
 export const DEFAULT_BREAKPOINTS = {
   [Breakpoint.XS]: 0,
